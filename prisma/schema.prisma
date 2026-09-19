@@ -1,0 +1,104 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Event {
+  id        String   @id @default(cuid())
+  name      String
+  type      String
+  tone      String
+  date      DateTime
+  status    String   @default("draft")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  speakers      Speaker[]
+  agendaItems   AgendaItem[]
+  scripts       Script[]
+  announcements Announcement[]
+  liveState     LiveEventState?
+}
+
+model Speaker {
+  id            String   @id @default(cuid())
+  eventId       String
+  name          String
+  role          String
+  organization  String
+  bio           String
+  arrivalStatus String   @default("not_arrived")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  event       Event        @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  agendaItems AgendaItem[]
+}
+
+model AgendaItem {
+  id              String   @id @default(cuid())
+  eventId         String
+  title           String
+  type            String
+  speakerId       String?
+  plannedStart    DateTime
+  durationMinutes Int
+  offsetMinutes   Int      @default(0)
+  orderIndex      Int
+  isBuffer        Boolean  @default(false)
+  status          String   @default("upcoming")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  event   Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  speaker Speaker? @relation(fields: [speakerId], references: [id], onDelete: SetNull)
+  scripts Script[]
+
+  @@index([eventId, orderIndex])
+}
+
+model Script {
+  id           String   @id @default(cuid())
+  eventId      String
+  agendaItemId String?
+  type         String
+  variant      String   @default("live")
+  content      String
+  createdAt    DateTime @default(now())
+
+  event      Event       @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  agendaItem AgendaItem? @relation(fields: [agendaItemId], references: [id], onDelete: Cascade)
+
+  @@index([eventId, type])
+}
+
+model LiveEventState {
+  id                   String    @id @default(cuid())
+  eventId              String    @unique
+  currentAgendaItemId  String?
+  nextAgendaItemId     String?
+  delayOffsetMinutes   Int       @default(0)
+  runState             String    @default("live")
+  scheduleStatus       String    @default("on_time")
+  currentItemStartedAt DateTime?
+  currentItemEndsAt    DateTime?
+  pausedAt             DateTime?
+  updatedAt            DateTime  @updatedAt
+
+  event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+}
+
+model Announcement {
+  id                String   @id @default(cuid())
+  eventId           String
+  source            String
+  message           String
+  generatedScriptId String?
+  createdAt         DateTime @default(now())
+
+  event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+}
