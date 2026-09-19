@@ -10,7 +10,7 @@ export default function EndedScreen({ eventName, closingScript }) {
       <div className="anchor-ended-box">
         <div className="anchor-ended-icon">🏁</div>
         <h1 className="anchor-ended-title">Event Concluded</h1>
-        <p className="anchor-ended-event">{eventName || 'Smart Anchor Stage'}</p>
+        <p className="anchor-ended-event">{eventName || 'AnchorFlow Stage'}</p>
 
         <div className="anchor-ended-content">
           {closingScript?.content ? closingScript.content : 'Thank you for joining us!'}

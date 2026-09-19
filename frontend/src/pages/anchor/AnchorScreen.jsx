@@ -1,4 +1,4 @@
-import { useParams } from 'react';
+import { useParams } from 'react-router-dom';
 import { useLiveEvent } from '../../hooks/useLiveEvent';
 import ScriptCard from '../../components/anchor/ScriptCard';
 import NextUpBanner from '../../components/anchor/NextUpBanner';

@@ -1,7 +1,7 @@
 {
   "name": "anchor-backend",
   "version": "1.0.0",
-  "description": "Smart Anchor and Stage Flow Management System backend",
+  "description": "AnchorFlow and Stage Flow Management System backend",
   "main": "src/server.js",
   "scripts": {
     "dev": "nodemon src/server.js",
