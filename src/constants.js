@@ -63,7 +63,16 @@ const DELAY_STRATEGY = Object.freeze({
   INSERT_FILLER_SEGMENT: "insert_filler_segment",
 });
 
+const ENERGY_THRESHOLDS = Object.freeze({
+  LOW: 1.8,
+  HIGH: 2.4,
+  MIN_SAMPLES: 3,
+  WINDOW_MS: 10 * 60 * 1000,
+  COOLDOWN_MS: 3 * 60 * 1000,
+});
+
 module.exports = {
+  ENERGY_THRESHOLDS,
   EVENT_STATUS,
   EVENT_TONE,
   ARRIVAL_STATUS,

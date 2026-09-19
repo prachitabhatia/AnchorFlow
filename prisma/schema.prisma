@@ -22,6 +22,7 @@ model Event {
   scripts       Script[]
   announcements Announcement[]
   liveState     LiveEventState?
+  energyPings   EnergyPing[]
 }
 
 model Speaker {
@@ -101,4 +102,15 @@ model Announcement {
   createdAt         DateTime @default(now())
 
   event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+}
+
+model EnergyPing {
+  id        String   @id @default(cuid())
+  eventId   String
+  value     Int
+  createdAt DateTime @default(now())
+
+  event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  @@index([eventId, createdAt])
 }

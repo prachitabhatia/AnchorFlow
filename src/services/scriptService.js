@@ -64,4 +64,43 @@ async function updateScript(id, content) {
   }
 }
 
-module.exports = { generateAndStore, listScripts, updateScript };
+async function getScriptWithFallback({ eventId, agendaItemId, type, extra = {} }, { generationFailed = false } = {}) {
+  eventId = validate.requireString(eventId, "eventId");
+  agendaItemId = validate.optionalString(agendaItemId, "agendaItemId");
+  type = validate.requireOneOf(type, "type", SCRIPT_TYPE);
+  extra = validateExtra(extra);
+  // Delay reporting already made its one AI attempt; it uses only the remaining two steps.
+  const generated = generationFailed ? null : await generateAndStore({ eventId, agendaItemId, type, extra });
+  if (generated?.source === "ai") return generated;
+  const context = await buildEventContext({ eventId, agendaItemId, extra });
+  const cached = await prisma.script.findMany({
+    where: { eventId, agendaItemId: context.current?.id ?? null, type, variant: SCRIPT_VARIANT.CACHED },
+    orderBy: [{ createdAt: "desc" }, { id: "desc" }], select: scriptFields,
+  });
+  // The two filler buckets are up to five minutes and longer waits (15-minute rehearsal).
+  // Announcements match their documented sub-kind, never an unrelated cached announcement.
+  let kind = type === SCRIPT_TYPE.FILLER ? `filler_${(extra.delayMinutes ?? 0) <= 5 ? 5 : 15}` : null;
+  if (type === SCRIPT_TYPE.ANNOUNCEMENT) {
+    if (/technical difficulty/i.test(extra.announcementText || "")) kind = "technical_difficulty";
+    else if (/cancelled|unable to join/i.test(extra.announcementText || "")) kind = "speaker_cancelled";
+  }
+  const match = cached.find((script) => {
+    const prefix = script.content.match(/^\[contingency:([^\]]+)\]\n/);
+    return script.content.replace(/^\[contingency:[^\]]+\]\n/, "").trim() &&
+      (prefix ? prefix[1] === kind : true);
+  });
+  if (match) {
+    // generateAndStore persisted its local fallback; discard that unused row when cache wins.
+    if (generated) await prisma.script.delete({ where: { id: generated.script.id } });
+    return { script: { ...match, content: match.content.replace(/^\[contingency:[^\]]+\]\n/, "") }, source: "cached" };
+  }
+  return {
+    script: generated?.script ?? {
+      id: null, type, variant: SCRIPT_VARIANT.LIVE, agendaItemId: context.current?.id ?? null,
+      content: getFallbackScript(type, context), createdAt: null,
+    },
+    source: "hardcoded",
+  };
+}
+
+module.exports = { generateAndStore, listScripts, updateScript, getScriptWithFallback };

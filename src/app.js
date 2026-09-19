@@ -4,7 +4,12 @@ const devRouter = require("./routes/dev");
 const eventsRouter = require("./routes/events");
 const { eventSpeakersRouter, speakersRouter } = require("./routes/speakers");
 const { eventAgendaRouter, agendaRouter } = require("./routes/agenda");
-const { generateRouter, eventScriptsRouter, scriptsRouter } = require("./routes/scripts");
+const { generateRouter, eventScriptsRouter, scriptsRouter, batchScriptsRouter } = require("./routes/scripts");
+const { liveControlsRouter, liveRouter } = require("./routes/live");
+const delayRouter = require("./routes/delay");
+const arrivalRouter = require("./routes/arrival");
+const announcementsRouter = require("./routes/announcements");
+const energyRouter = require("./routes/energy");
 const ApiError = require("./utils/ApiError");
 const errorHandler = require("./middleware/errorHandler");
 
@@ -22,6 +27,7 @@ app.get("/health", (req, res) => {
 });
 
 app.use("/dev", devRouter);
+app.use("/events", energyRouter);
 app.use("/events", eventsRouter);
 app.use("/events/:eventId/speakers", eventSpeakersRouter);
 app.use("/speakers", speakersRouter);
@@ -30,6 +36,12 @@ app.use("/agenda", agendaRouter);
 app.use("/generate-script", generateRouter);
 app.use("/events/:eventId/scripts", eventScriptsRouter);
 app.use("/scripts", scriptsRouter);
+app.use("/events", batchScriptsRouter);
+app.use("/events/:id", liveControlsRouter);
+app.use("/live", liveRouter);
+app.use("/report-delay", delayRouter);
+app.use("/speaker-arrived", arrivalRouter);
+app.use("/events", announcementsRouter);
 app.use((req, res, next) => next(ApiError.notFound("Route not found")));
 app.use(errorHandler);
 
