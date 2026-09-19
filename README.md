@@ -1,22 +1,4 @@
-\<h1 align="center">🎙️ AnchorFlow\</h1>
-
-\<p align="center">
-&#x20; \<strong>AI-powered event operations for smoother stages, faster recoveries, and better-prepared anchors.\</strong>
-\</p>
-
-\<p align="center">
-&#x20; AnchorFlow keeps organizers and anchors synchronized before and during live events—even when the schedule changes unexpectedly.
-\</p>
-
-\<p align="center">
-&#x20; \<img src="[https://img.shields.io/badge/React-Frontend-61DAFB?logo=react&logoColor=black](https://img.shields.io/badge/React-Frontend-61DAFB?logo=react\&logoColor=black)" alt="React badge" />
-&#x20; \<img src="[https://img.shields.io/badge/Node.js-Backend-339933?logo=nodedotjs&logoColor=white](https://img.shields.io/badge/Node.js-Backend-339933?logo=nodedotjs\&logoColor=white)" alt="Node.js badge" />
-&#x20; \<img src="[https://img.shields.io/badge/Express-API-000000?logo=express&logoColor=white](https://img.shields.io/badge/Express-API-000000?logo=express\&logoColor=white)" alt="Express badge" />
-&#x20; \<img src="[https://img.shields.io/badge/Prisma-ORM-2D3748?logo=prisma&logoColor=white](https://img.shields.io/badge/Prisma-ORM-2D3748?logo=prisma\&logoColor=white)" alt="Prisma badge" />
-&#x20; \<img src="[https://img.shields.io/badge/SQLite-Database-003B57?logo=sqlite&logoColor=white](https://img.shields.io/badge/SQLite-Database-003B57?logo=sqlite\&logoColor=white)" alt="SQLite badge" />
-\</p>
-
----
+🎙️ AnchorFlow
 
 ## 📑 Table of Contents
 
