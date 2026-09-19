@@ -82,4 +82,4 @@ async function deleteAgendaItem(id) {
   });
 }
 
-module.exports = { createAgendaItem, listAgendaItems, updateAgendaItem, reorderAgenda, deleteAgendaItem };
+module.exports = { createAgendaItem, listAgendaItems, updateAgendaItem, reorderAgenda, deleteAgendaItem, withEffectiveTimes };
