@@ -1,29 +1,113 @@
 import { useParams } from 'react';
+import { useLiveEvent } from '../../hooks/useLiveEvent';
+import ScriptCard from '../../components/anchor/ScriptCard';
+import NextUpBanner from '../../components/anchor/NextUpBanner';
+import DelayBanner from '../../components/anchor/DelayBanner';
+import PausedOverlay from '../../components/anchor/PausedOverlay';
+import EndedScreen from '../../components/anchor/EndedScreen';
+import Countdown from '../../components/anchor/Countdown';
 import '../../styles/anchor.css';
 
 export default function AnchorScreen() {
   const { eventId } = useParams();
+  const { snapshot, loading, notStarted, serverOffset } = useLiveEvent(eventId);
+
+  if (loading) {
+    return (
+      <div className="anchor-screen">
+        <div className="anchor-stage-card">
+          <div className="anchor-badge">
+            <span className="anchor-live-dot" />
+            Connecting to Live Stage
+          </div>
+          <h2 className="anchor-subtitle">Loading stage teleprompter feed...</h2>
+        </div>
+      </div>
+    );
+  }
+
+  if (notStarted) {
+    return (
+      <div className="anchor-screen">
+        <div className="anchor-stage-card">
+          <div className="anchor-badge" style={{ backgroundColor: 'rgba(245, 158, 11, 0.15)', borderColor: 'var(--anchor-status-warning)', color: 'var(--anchor-status-warning)' }}>
+            Stage Inactive
+          </div>
+          <h1 className="anchor-title">Event has not started yet</h1>
+          <p className="anchor-subtitle">
+            The organizer control room has not initiated the live stage stream for event <span className="anchor-event-id">{eventId}</span>.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // Handle Ended State
+  if (snapshot?.runState === 'ended') {
+    return (
+      <EndedScreen
+        eventName={snapshot.eventName}
+        closingScript={snapshot.current?.script}
+      />
+    );
+  }
+
+  const isPaused = snapshot?.runState === 'paused';
+  const isDelayed = snapshot?.scheduleStatus === 'delayed';
 
   return (
     <div className="anchor-screen">
-      <div className="anchor-stage-card">
-        <div className="anchor-badge">
-          <span className="anchor-live-dot" />
-          Public Stage Teleprompter
+      {/* Paused Overlay */}
+      {isPaused && <PausedOverlay />}
+
+      {/* Top Bar / Status Header */}
+      <header style={{
+        width: '100%',
+        maxWidth: '1100px',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: '0.5rem 0',
+        zIndex: 10
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <span className="anchor-badge">
+            <span className="anchor-live-dot" style={{ backgroundColor: isPaused ? 'var(--anchor-status-warning)' : 'var(--anchor-status-live)' }} />
+            {isPaused ? 'PAUSED' : 'LIVE STAGE'}
+          </span>
+          <h2 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--anchor-text)', margin: 0 }}>
+            {snapshot?.eventName || 'Smart Anchor'}
+          </h2>
         </div>
 
-        <h1 className="anchor-title">
-          Anchor screen — Stage 8 will make this live
-        </h1>
+        {/* Current Segment Details & Per-Second Countdown */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+          {snapshot?.current?.item && (
+            <div style={{ textAlign: 'right' }}>
+              <span style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--anchor-text-secondary)', fontWeight: 600 }}>
+                CURRENT SEGMENT
+              </span>
+              <div style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--anchor-text-accent)' }}>
+                {snapshot.current.item.title} {snapshot.current.item.type ? `(${snapshot.current.item.type})` : ''}
+              </div>
+            </div>
+          )}
 
-        <p className="anchor-subtitle">
-          High-visibility teleprompter & cue screen for stage anchors and presenters.
-        </p>
-
-        <div>
-          Target Event: <span className="anchor-event-id">{eventId || 'No Event ID Specified'}</span>
+          {/* Drift-Free Per-Second Countdown */}
+          <Countdown snapshot={snapshot} serverOffset={serverOffset} />
         </div>
-      </div>
+      </header>
+
+      {/* Schedule Delay Warning Banner */}
+      {isDelayed && (
+        <DelayBanner delayOffsetMinutes={snapshot?.delayOffsetMinutes || 0} />
+      )}
+
+      {/* Main Teleprompter Script Card */}
+      <ScriptCard script={snapshot?.current?.script} />
+
+      {/* Footer / Next Up Banner */}
+      <NextUpBanner next={snapshot?.next} />
     </div>
   );
 }
