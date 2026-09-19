@@ -47,7 +47,7 @@ export default function EventListPage() {
       <header className="organizer-top-bar">
         <div className="organizer-brand">
           <span style={{ fontSize: '1.25rem' }}>🎛️</span>
-          <h1 className="organizer-brand-title">Smart Anchor Control Room</h1>
+          <h1 className="organizer-brand-title">AnchorFlow Control Room</h1>
         </div>
         <div>
           <button onClick={logout} className="btn btn-secondary" style={{ fontSize: '0.8rem', padding: '0.4rem 0.75rem' }}>

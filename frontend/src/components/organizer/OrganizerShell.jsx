@@ -18,7 +18,7 @@ export default function OrganizerShell() {
       <header className="organizer-top-bar">
         <div className="organizer-brand">
           <span style={{ fontSize: '1.25rem' }}>🎛️</span>
-          <h1 className="organizer-brand-title">Smart Anchor</h1>
+          <h1 className="organizer-brand-title">AnchorFlow</h1>
           {id && <span className="organizer-event-badge">Event: {id}</span>}
         </div>
 

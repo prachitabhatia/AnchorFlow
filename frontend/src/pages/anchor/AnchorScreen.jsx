@@ -76,7 +76,7 @@ export default function AnchorScreen() {
             {isPaused ? 'PAUSED' : 'LIVE STAGE'}
           </span>
           <h2 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--anchor-text)', margin: 0 }}>
-            {snapshot?.eventName || 'Smart Anchor'}
+            {snapshot?.eventName || 'AnchorFlow'}
           </h2>
         </div>
 

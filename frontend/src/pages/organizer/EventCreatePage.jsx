@@ -62,7 +62,7 @@ export default function EventCreatePage() {
       <header className="organizer-top-bar">
         <div className="organizer-brand">
           <span style={{ fontSize: '1.25rem' }}>🎛️</span>
-          <h1 className="organizer-brand-title">Smart Anchor - Create Event</h1>
+          <h1 className="organizer-brand-title">AnchorFlow - Create Event</h1>
         </div>
         <Link to="/organizer/events">
           <Button variant="secondary">← Back to Events List</Button>
