@@ -1,0 +1,82 @@
+/* Anchor Stage Big Screen Stylesheet */
+
+.anchor-screen {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 2rem;
+  box-sizing: border-box;
+  background-color: var(--anchor-bg);
+  color: var(--anchor-text);
+  font-family: var(--font-family);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+}
+
+.anchor-stage-card {
+  max-width: 900px;
+  width: 100%;
+  background-color: var(--anchor-surface);
+  border: 2px solid var(--anchor-border);
+  border-radius: var(--radius-xl);
+  padding: 3.5rem 2.5rem;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 40px var(--anchor-accent-glow);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.anchor-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.25rem;
+  border-radius: 9999px;
+  background-color: rgba(99, 102, 241, 0.15);
+  border: 1px solid var(--anchor-accent);
+  color: var(--anchor-accent-bright);
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.anchor-live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--anchor-status-live);
+  box-shadow: 0 0 10px var(--anchor-status-live);
+}
+
+.anchor-title {
+  font-size: 2.75rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--anchor-text);
+  line-height: 1.2;
+}
+
+.anchor-subtitle {
+  font-size: 1.25rem;
+  color: var(--anchor-text-secondary);
+  max-width: 600px;
+}
+
+.anchor-event-id {
+  font-family: var(--font-family-mono);
+  color: var(--anchor-text-accent);
+  background-color: var(--anchor-surface-elevated);
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+}

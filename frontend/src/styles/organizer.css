@@ -1,0 +1,199 @@
+/* Organizer Control Room Stylesheet */
+
+.organizer-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--organizer-bg);
+  color: var(--organizer-text);
+  font-family: var(--font-family);
+}
+
+.organizer-top-bar {
+  background-color: var(--organizer-surface);
+  border-bottom: 1px solid var(--organizer-border);
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow-sm);
+}
+
+.organizer-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.organizer-brand-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #f8fafc;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.organizer-event-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-sm);
+  background-color: var(--organizer-accent-glow);
+  color: var(--organizer-accent);
+  border: 1px solid rgba(2, 132, 199, 0.4);
+  font-family: var(--font-family-mono);
+}
+
+.organizer-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.organizer-nav-link {
+  color: var(--organizer-text-secondary);
+  text-decoration: none;
+  padding: 0.5rem 0.85rem;
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all var(--transition-fast);
+}
+
+.organizer-nav-link:hover {
+  color: var(--organizer-text);
+  background-color: var(--organizer-surface-hover);
+}
+
+.organizer-nav-link.active {
+  color: #ffffff;
+  background-color: var(--organizer-accent);
+}
+
+.organizer-sub-nav {
+  background-color: var(--organizer-bg);
+  border-bottom: 1px solid var(--organizer-border);
+  padding: 0.5rem 1.5rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.organizer-sub-nav-link {
+  color: var(--organizer-text-muted);
+  text-decoration: none;
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.825rem;
+  font-weight: 500;
+  transition: all var(--transition-fast);
+}
+
+.organizer-sub-nav-link:hover {
+  color: var(--organizer-text-secondary);
+}
+
+.organizer-sub-nav-link.active {
+  color: var(--organizer-text);
+  background-color: var(--organizer-surface);
+  border: 1px solid var(--organizer-border);
+}
+
+.organizer-content {
+  flex: 1;
+  padding: 2rem;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.organizer-card {
+  background-color: var(--organizer-surface);
+  border: 1px solid var(--organizer-border);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  box-shadow: var(--shadow-md);
+}
+
+.organizer-page-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+}
+
+.organizer-page-desc {
+  color: var(--organizer-text-secondary);
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Button & UI utilities in organizer theme */
+.btn {
+  font-family: var(--font-family);
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn-primary {
+  background-color: var(--organizer-accent);
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background-color: var(--organizer-accent-hover);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  border-color: var(--organizer-border);
+  color: var(--organizer-text-secondary);
+}
+
+.btn-secondary:hover {
+  background-color: var(--organizer-surface-hover);
+  color: var(--organizer-text);
+}
+
+.loading-spinner-container {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--organizer-text-secondary);
+}
+
+.loading-spinner-icon {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--organizer-border);
+  border-top-color: var(--organizer-accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.error-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.875rem 1.25rem;
+  border-radius: var(--radius-md);
+  background-color: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: var(--organizer-danger);
+  font-size: 0.875rem;
+}

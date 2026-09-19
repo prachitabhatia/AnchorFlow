@@ -1,0 +1,78 @@
+/* Smart Anchor Design System - CSS Tokens */
+
+:root {
+  /* ==========================================================================
+     Organizer Palette - "Control Room" Theme (Slate / Dark Studio Look)
+     ========================================================================== */
+  --organizer-bg: #0f172a;            /* Deep navy / slate background */
+  --organizer-surface: #1e293b;       /* Surface / card background */
+  --organizer-surface-hover: #334155; /* Hover surface state */
+  --organizer-border: #334155;        /* Subtle border */
+  --organizer-border-focus: #38bdf8;  /* Cyan focus ring */
+
+  --organizer-text: #f8fafc;          /* High contrast primary text */
+  --organizer-text-secondary: #94a3b8;/* Muted secondary text */
+  --organizer-text-muted: #64748b;    /* Dim tertiary text */
+
+  --organizer-accent: #0284c7;        /* Primary organizer blue accent */
+  --organizer-accent-hover: #0369a1;  /* Accent hover state */
+  --organizer-accent-glow: rgba(2, 132, 199, 0.25);
+
+  --organizer-success: #10b981;       /* Live / Active indicator green */
+  --organizer-warning: #f59e0b;       /* Delay / Warning amber */
+  --organizer-danger: #ef4444;        /* Critical alert red */
+
+  /* ==========================================================================
+     Anchor Palette - "Big Screen" Theme (High Contrast Stage Display)
+     ========================================================================== */
+  --anchor-bg: #090d16;               /* Ultra-dark stage back drop */
+  --anchor-surface: #131b2e;          /* Prominent stage card background */
+  --anchor-surface-elevated: #1c2744; /* Elevated active segment card */
+  --anchor-border: #263554;           /* Stage container border */
+
+  --anchor-text: #ffffff;             /* Crisp white text for distant reading */
+  --anchor-text-secondary: #cbd5e1;   /* High visibility secondary text */
+  --anchor-text-accent: #38bdf8;      /* Vibrant cyan text highlight */
+
+  --anchor-accent: #6366f1;           /* Stage electric violet accent */
+  --anchor-accent-bright: #818cf8;    /* Glowing active teleprompter text */
+  --anchor-accent-glow: rgba(99, 102, 241, 0.35);
+
+  --anchor-status-live: #22c55e;      /* "ON STAGE" vivid green badge */
+  --anchor-status-next: #38bdf8;      /* "UP NEXT" vivid cyan badge */
+  --anchor-status-warning: #fbbf24;   /* Time low / delay alert */
+
+  /* ==========================================================================
+     Shared Typography & Design Variables
+     ========================================================================== */
+  --font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-family-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Global Reset & Base Styles */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--organizer-bg);
+  color: var(--organizer-text);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
