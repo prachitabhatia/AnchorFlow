@@ -1,128 +1,154 @@
-🎙️ AnchorFlow
+\<h1 align="center">🎙️ AnchorFlow\</h1>
 
-An AI-powered event operations platform that keeps organizers and anchors synchronized when a live event changes.
+\<p align="center">
+&#x20; \<strong>AI-powered event operations for smoother stages, faster recoveries, and better-prepared anchors.\</strong>
+\</p>
 
-📌 Overview
+\<p align="center">
+&#x20; AnchorFlow keeps organizers and anchors synchronized before and during live events—even when the schedule changes unexpectedly.
+\</p>
 
-College events require anchors and organizers to coordinate schedules, speaker introductions, transitions, announcements, and delays in real time. These details are often spread across printed schedules and group chats, so one unexpected change can create confusion on stage.
+\<p align="center">
+&#x20; \<img src="[https://img.shields.io/badge/React-Frontend-61DAFB?logo=react&logoColor=black](https://img.shields.io/badge/React-Frontend-61DAFB?logo=react\&logoColor=black)" alt="React badge" />
+&#x20; \<img src="[https://img.shields.io/badge/Node.js-Backend-339933?logo=nodedotjs&logoColor=white](https://img.shields.io/badge/Node.js-Backend-339933?logo=nodedotjs\&logoColor=white)" alt="Node.js badge" />
+&#x20; \<img src="[https://img.shields.io/badge/Express-API-000000?logo=express&logoColor=white](https://img.shields.io/badge/Express-API-000000?logo=express\&logoColor=white)" alt="Express badge" />
+&#x20; \<img src="[https://img.shields.io/badge/Prisma-ORM-2D3748?logo=prisma&logoColor=white](https://img.shields.io/badge/Prisma-ORM-2D3748?logo=prisma\&logoColor=white)" alt="Prisma badge" />
+&#x20; \<img src="[https://img.shields.io/badge/SQLite-Database-003B57?logo=sqlite&logoColor=white](https://img.shields.io/badge/SQLite-Database-003B57?logo=sqlite\&logoColor=white)" alt="SQLite badge" />
+\</p>
 
-AnchorFlow creates a single, shared source of truth through two focused interfaces:
+---
 
-Organizer Dashboard: Manage the event, agenda, speakers, scripts, delays, and announcements.
+## 📑 Table of Contents
 
-Anchor Dashboard: View the current activity, an anchor-ready script, a countdown, and the next activity.
+- [Overview](#-overview)
+- [Features](#-features)
+- [Tech Stack](#-tech-stack)
+- [Platform Workflow](#-platform-workflow)
+- [Contributors](#-contributors)
+- [Why AnchorFlow?](#-why-anchorflow)
 
-When an organizer reports a delay, AnchorFlow recalculates the schedule, generates an appropriate filler or transition script, and sends the update to the anchor without requiring a page refresh.
+---
 
-🔄 Core Workflow
+## 🌐 Overview
 
+Live college events involve speakers, activities, announcements, transitions, and strict schedules. When a speaker is late or an activity runs over time, organizers often coordinate through paper schedules and group chats while the anchor improvises on stage.
+
+**AnchorFlow** gives the event team one shared platform to:
+
+1. **Plan** the event agenda and manage speaker information.
+2. **Generate** opening, introduction, transition, filler, announcement, and closing scripts with AI.
+3. **Run** the event through a synchronized Organizer Dashboard and Anchor Dashboard.
+4. **Recover** from delays by recalculating timings and preparing an immediate anchor-ready script.
+5. **Track** the current activity, upcoming activity, countdown, and live event status.
+
+---
+
+## ✨ Features
+
+### 🎛️ Organizer Dashboard
+
+- Create and manage events, agenda items, speakers, and guests.
+- Reorder activities and update their timings.
+- Review, edit, or regenerate AI-created scripts.
+- Start, pause, advance, and end a live event.
+- Report delays and publish unexpected announcements.
+- Mark a speaker as arrived and notify the anchor instantly.
+
+### 🎤 Anchor Dashboard
+
+- Display a large, distraction-free script for the current moment.
+- Show the current activity and its live countdown.
+- Preview the next scheduled activity.
+- Receive schedule changes and announcements automatically.
+- Advance the event using a simple **Mark Done / Next** control.
+- Support readable font sizes and light/dark viewing modes.
+
+### 🤖 AI Script Generation
+
+AnchorFlow builds every script from the event context, including its tone, agenda, speakers, previous activity, upcoming activity, and current schedule status.
+
+It can generate:
+
+- Opening scripts
+- Speaker introductions
+- Activity introductions
+- Transition scripts
+- Delay filler scripts
+- Unexpected announcements
+- Closing scripts
+
+### ⏱️ Delay-Aware Schedule Recovery
+
+- Accept a delayed activity and the expected delay duration.
+- Calculate how much time can be absorbed through available buffers.
+- Shift affected agenda items using deterministic backend logic.
+- Generate a context-aware filler or transition script.
+- Push the new script, countdown, and schedule to the Anchor Dashboard.
+
+### 🛟 One-Tap Recovery Cards
+
+- Pre-generate scripts for short delays, longer delays, cancellations, and technical issues.
+- Display a cached script immediately when a live AI request is slow or unavailable.
+- Replace it with a newly generated version when available.
+
+### 🔥 Vibe Meter
+
+- Collect simple crowd-energy feedback from organizers or volunteers.
+- Track recent audience energy through a live gauge.
+- Suggest a brief re-engagement prompt when energy drops.
+
+---
+
+## 🛠 Tech Stack
+
+| Category          | Technology                      |
+| ----------------- | ------------------------------- |
+| Frontend          | React, Vite                     |
+| Styling           | Tailwind CSS                    |
+| Backend           | Node.js                         |
+| Database          | SQLite                          |
+| ORM               | Prisma                          |
+| Real-time updates | Socket.IO with polling fallback |
+| AI                | Configurable LLM API            |
+| Development       | Nodemon                         |
+| Version control   | Git and GitHub                  |
+
+---
+
+## 🔄 Platform Workflow
+
+```mermaid
 flowchart TD
-    A["Create event"] --> B["Add agenda and speakers"]
+    A["Organizer creates event"] --> B["Add agenda and speakers"]
     B --> C["Generate scripts with AI"]
     C --> D["Start Live Mode"]
-    D --> E["Organizer reports a delay"]
-    E --> F["Recalculate schedule"]
-    F --> G["Generate recovery script"]
-    G --> H["Update Anchor Dashboard"]
+    D --> E["Anchor receives current script"]
+    E --> F{"Schedule change?"}
+    F -- No --> G["Advance to next activity"]
+    G --> E
+    F -- Yes --> H["Report delay or announcement"]
+    H --> I["Recalculate schedule"]
+    I --> J["Generate recovery script"]
+    J --> E
+```
 
-✨ Features
+The organizer and anchor views use the same `LiveEventState`. Socket.IO sends changes immediately, while the live-state API provides a polling fallback.
 
-Organizer Dashboard
+---
 
--Create and manage events, speakers, guests, and agenda items
+## 👩‍💻 Contributors
 
--Reorder or retime activities
+- [Prachita Bhatia](https://github.com/prachitabhatia)
+- Neha Siju
 
--Generate, review, edit, and regenerate scripts
+---
 
--Start, pause, advance, and end a live event
+## 💡 Why AnchorFlow?
 
--Report delays and publish unexpected announcements
+Live events feel most disorganized during transitions, delays, and unexpected announcements—the exact moments when anchors need the clearest guidance. AnchorFlow gives organizers a reliable control layer and gives anchors the right words at the right moment, keeping the stage professional even when the original schedule changes.
 
--Mark speakers as arrived and notify the anchor
+---
 
-Anchor Dashboard
-
--Large, distraction-free script card
-
--Current activity countdown
-
--Preview of the next activity
-
--Automatic schedule and announcement updates
-
--Simple Mark Done / Next control
-
--Adjustable font size and light/dark display modes
-
-
-**AI Script Generation
-**
-AnchorFlow uses event details, agenda context, speaker biographies, event tone, and live schedule status to generate:
-
--Opening scripts
-
--Speaker introductions
-
--Activity introductions
-
--Transition scripts
-
--Delay filler scripts
-
--Unexpected announcements
-
--Closing scripts
-
-**Live Schedule Recovery
-**
-The scheduling engine performs time calculations using deterministic backend logic. AI generates the language used on stage and can suggest a recovery strategy, while the backend applies bounded and predictable schedule changes.
-
-For example, if a speaker is delayed by 20 minutes, AnchorFlow can use available buffer time, adjust later activities, generate a short audience-engagement script, and immediately update the anchor's screen.
-
-🌟 Standout Features
-
-**One-Tap Recovery Cards
-**
-Pre-generated contingency scripts provide an immediate response for situations such as short delays, cancellations, or technical difficulties. A freshly generated script can replace the cached version when it becomes available.
-
-**Vibe Meter
-**
-Organizers or audience volunteers can submit simple crowd-energy signals. When engagement drops, AnchorFlow can suggest a short, context-aware line to help the anchor re-engage the room.
-
-🏗️ How It Works
-
-Both dashboards use a shared LiveEventState. The organizer controls the event flow, while the anchor receives the latest script, timing, and activity information. Socket.IO provides live updates, with polling available as a fallback.
-
-flowchart LR
-    O["Organizer Dashboard"] -->|Controls and updates| API["Backend API"]
-    API --> DB["SQLite database"]
-    API --> AI["AI script generator"]
-    DB --> LIVE["Live event state"]
-    AI --> LIVE
-    LIVE -->|Socket.IO / polling| A["Anchor Dashboard"]
-
-🛠️ Tech Stack
-
--Frontend
-
-React, Vite, Tailwind CSS
-
--Backend
-
-Node.js
-
--Database
-
-SQLite, Prisma ORM
-
--Real-time updates
-
-Socket.IO with polling fallback
-
--AI
-
-Configurable LLM API
-
-
-Open a pull request describing what changed and how it was verified.
+\<p align="center">
+&#x20; Built for smoother events—from the opening welcome to the final sign-off.
+\</p>
