@@ -1,125 +1,128 @@
-# AnchorFlow
+🎙️ AnchorFlow
 
 An AI-powered event operations platform that keeps organizers and anchors synchronized when a live event changes.
 
-Overview
+📌 Overview
 
-College events depend on anchors and organizers coordinating schedules, speaker introductions, transitions, announcements, and delays in real time. These details are often spread across printed schedules and group chats, so one unexpected change can create confusion on stage.
+College events require anchors and organizers to coordinate schedules, speaker introductions, transitions, announcements, and delays in real time. These details are often spread across printed schedules and group chats, so one unexpected change can create confusion on stage.
 
-AnchorFlow provides one shared live state through two focused interfaces:
+AnchorFlow creates a single, shared source of truth through two focused interfaces:
 
 Organizer Dashboard: Manage the event, agenda, speakers, scripts, delays, and announcements.
 
-Anchor Dashboard: Display the current activity, an anchor-ready script, a countdown, and what comes next.
+Anchor Dashboard: View the current activity, an anchor-ready script, a countdown, and the next activity.
 
 When an organizer reports a delay, AnchorFlow recalculates the schedule, generates an appropriate filler or transition script, and sends the update to the anchor without requiring a page refresh.
 
-Core Workflow
+🔄 Core Workflow
 
 flowchart TD
     A["Create event"] --> B["Add agenda and speakers"]
     B --> C["Generate scripts with AI"]
     C --> D["Start Live Mode"]
     D --> E["Organizer reports a delay"]
-    E --> F["Schedule engine recalculates timings"]
-    F --> G["AI prepares a recovery script"]
-    G --> H["Anchor Dashboard updates live"]
+    E --> F["Recalculate schedule"]
+    F --> G["Generate recovery script"]
+    G --> H["Update Anchor Dashboard"]
 
-
-Features
+✨ Features
 
 Organizer Dashboard
 
-Create and manage events, speakers, guests, and agenda items
+-Create and manage events, speakers, guests, and agenda items
 
-Reorder or retime activities
+-Reorder or retime activities
 
-Generate, review, edit, and regenerate scripts
+-Generate, review, edit, and regenerate scripts
 
-Start, pause, advance, and end a live event
+-Start, pause, advance, and end a live event
 
-Report delays and publish unexpected announcements
+-Report delays and publish unexpected announcements
 
-Mark speakers as arrived and notify the anchor
+-Mark speakers as arrived and notify the anchor
 
-Anchor Dashboard :
+Anchor Dashboard
 
-Large, distraction-free script card
+-Large, distraction-free script card
 
-Current activity countdown
+-Current activity countdown
 
-Next activity preview
+-Preview of the next activity
 
-Automatic schedule and announcement updates
+-Automatic schedule and announcement updates
 
-Simple Mark Done / Next control
+-Simple Mark Done / Next control
 
-Adjustable font size and light/dark display modes
+-Adjustable font size and light/dark display modes
 
-AI Script Generation
 
+**AI Script Generation
+**
 AnchorFlow uses event details, agenda context, speaker biographies, event tone, and live schedule status to generate:
 
-Opening scripts
+-Opening scripts
 
-Speaker introductions
+-Speaker introductions
 
-Activity introductions
+-Activity introductions
 
-Transition scripts
+-Transition scripts
 
-Delay filler scripts
+-Delay filler scripts
 
-Unexpected announcements
+-Unexpected announcements
 
-Closing scripts
+-Closing scripts
 
-Live Schedule Recovery
+**Live Schedule Recovery
+**
+The scheduling engine performs time calculations using deterministic backend logic. AI generates the language used on stage and can suggest a recovery strategy, while the backend applies bounded and predictable schedule changes.
 
-The scheduling engine performs time calculations with deterministic backend logic. AI generates the language used on stage and can suggest a recovery strategy, while the backend applies bounded, predictable schedule changes.
+For example, if a speaker is delayed by 20 minutes, AnchorFlow can use available buffer time, adjust later activities, generate a short audience-engagement script, and immediately update the anchor's screen.
 
-Example: if a speaker is delayed by 20 minutes, AnchorFlow can consume available buffer time, adjust later activities, generate a short audience-engagement script, and immediately update the anchor's screen.
+🌟 Standout Features
 
-Standout Features
+**One-Tap Recovery Cards
+**
+Pre-generated contingency scripts provide an immediate response for situations such as short delays, cancellations, or technical difficulties. A freshly generated script can replace the cached version when it becomes available.
 
-One-Tap Recovery Cards
+**Vibe Meter
+**
+Organizers or audience volunteers can submit simple crowd-energy signals. When engagement drops, AnchorFlow can suggest a short, context-aware line to help the anchor re-engage the room.
 
-Pre-generated contingency scripts provide an immediate response for common situations such as a short delay, a cancellation, or technical difficulty. A freshly generated script can replace the cached version when it becomes available.
+🏗️ How It Works
 
-Vibe Meter
+Both dashboards use a shared LiveEventState. The organizer controls the event flow, while the anchor receives the latest script, timing, and activity information. Socket.IO provides live updates, with polling available as a fallback.
 
-Organizers or audience volunteers can submit simple crowd-energy signals. When engagement drops, AnchorFlow can suggest a short, context-aware line for the anchor to re-engage the room.
+flowchart LR
+    O["Organizer Dashboard"] -->|Controls and updates| API["Backend API"]
+    API --> DB["SQLite database"]
+    API --> AI["AI script generator"]
+    DB --> LIVE["Live event state"]
+    AI --> LIVE
+    LIVE -->|Socket.IO / polling| A["Anchor Dashboard"]
 
+🛠️ Tech Stack
 
-The application keeps the organizer and anchor views synchronized through a shared LiveEventState. Socket.IO provides live updates, with polling available as a fallback.
-
-
-Tech Stack
-
-Frontend:
+-Frontend
 
 React, Vite, Tailwind CSS
 
-Backend:
+-Backend
 
 Node.js
 
-Database:
+-Database
 
 SQLite, Prisma ORM
 
-Real-time updates:
+-Real-time updates
 
 Socket.IO with polling fallback
 
-AI
+-AI
 
 Configurable LLM API
 
-Create a focused feature branch.
-
-Keep commits small and clearly named.
-
-Test the affected workflow locally.
 
 Open a pull request describing what changed and how it was verified.
