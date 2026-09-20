@@ -6,7 +6,7 @@
 - [Features](#-features)
 - [Tech Stack](#-tech-stack)
 - [Platform Workflow](#-platform-workflow)
-- [Getting started](#getting-started)
+- [Getting started](#-getting-started)
 - [Contributors](#-contributors)
 - [Why AnchorFlow?](#-why-anchorflow)
 
@@ -320,8 +320,3 @@ Replace localhost with that IP address.
 
 Live events feel most disorganized during transitions, delays, and unexpected announcements—the exact moments when anchors need the clearest guidance. AnchorFlow gives organizers a reliable control layer and gives anchors the right words at the right moment, keeping the stage professional even when the original schedule changes.
 
----
-
-\<p align="center">
-&#x20; Built for smoother events—from the opening welcome to the final sign-off.
-\</p>
