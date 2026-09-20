@@ -71,6 +71,20 @@ const ENERGY_THRESHOLDS = Object.freeze({
   COOLDOWN_MS: 3 * 60 * 1000,
 });
 
+const CROWD_REACTION = Object.freeze({
+  AMAZING: "amazing",
+  GOOD: "good",
+  MID: "mid",
+  BORING: "boring",
+  CONFUSING: "confusing",
+});
+
+const CROWD_BRAIN_THRESHOLDS = Object.freeze({
+  RECOMPUTE_EVERY: 10,
+  MIN_SAMPLE: 5,
+  REGENERATE_COOLDOWN_MS: 30000,
+});
+
 module.exports = {
   ENERGY_THRESHOLDS,
   EVENT_STATUS,
@@ -83,4 +97,6 @@ module.exports = {
   SCHEDULE_STATUS,
   ANNOUNCEMENT_SOURCE,
   DELAY_STRATEGY,
+  CROWD_REACTION,
+  CROWD_BRAIN_THRESHOLDS,
 };

@@ -28,6 +28,7 @@ app.get("/health", (req, res) => {
 
 app.use("/dev", devRouter);
 app.use("/events", energyRouter);
+app.use("/events", require("./routes/crowdBrain"));
 app.use("/events", eventsRouter);
 app.use("/events/:eventId/speakers", eventSpeakersRouter);
 app.use("/speakers", speakersRouter);

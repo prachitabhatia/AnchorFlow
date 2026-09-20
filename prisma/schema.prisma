@@ -23,6 +23,8 @@ model Event {
   announcements Announcement[]
   liveState     LiveEventState?
   energyPings   EnergyPing[]
+  crowdBrainResponses CrowdBrainResponse[]
+  crowdBrainInsight   CrowdBrainInsight[]
 }
 
 model Speaker {
@@ -58,6 +60,8 @@ model AgendaItem {
   event   Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
   speaker Speaker? @relation(fields: [speakerId], references: [id], onDelete: SetNull)
   scripts Script[]
+  crowdBrainResponses CrowdBrainResponse[]
+  crowdBrainInsight   CrowdBrainInsight?
 
   @@index([eventId, orderIndex])
 }
@@ -113,4 +117,32 @@ model EnergyPing {
   event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
 
   @@index([eventId, createdAt])
+}
+
+model CrowdBrainResponse {
+  id           String   @id @default(cuid())
+  eventId      String
+  agendaItemId String
+  reaction     String
+  createdAt    DateTime @default(now())
+
+  event      Event      @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  agendaItem AgendaItem @relation(fields: [agendaItemId], references: [id], onDelete: Cascade)
+
+  @@index([eventId, agendaItemId, createdAt])
+}
+
+model CrowdBrainInsight {
+  id                      String   @id @default(cuid())
+  eventId                 String
+  agendaItemId            String   @unique
+  moodLabel               String
+  insightText             String
+  recommendationText      String
+  suggestedLine           String
+  totalResponsesAtCompute Int
+  updatedAt               DateTime @updatedAt
+
+  event      Event      @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  agendaItem AgendaItem @relation(fields: [agendaItemId], references: [id], onDelete: Cascade)
 }
