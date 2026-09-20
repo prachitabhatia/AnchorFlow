@@ -6,6 +6,7 @@
 - [Features](#-features)
 - [Tech Stack](#-tech-stack)
 - [Platform Workflow](#-platform-workflow)
+- [Getting started](#getting-started)
 - [Contributors](#-contributors)
 - [Why AnchorFlow?](#-why-anchorflow)
 
@@ -117,6 +118,196 @@ flowchart TD
 The organizer and anchor views use the same `LiveEventState`. Socket.IO sends changes immediately, while the live-state API provides a polling fallback.
 
 ---
+
+## 🚀 Getting Started
+Prerequisites
+
+Make sure you have:
+
+Node.js and npm
+Git
+Two terminal windows — one for the backend and one for the frontend
+
+AnchorFlow uses SQLite with Prisma, so no separate database server is required.
+
+## 📦 Installation
+1. Clone the Repository
+git clone https://github.com/prachitabhatia/AnchorFlow.git
+cd AnchorFlow
+
+Install backend dependencies:
+
+npm install
+
+Install frontend dependencies:
+
+cd frontend
+npm install
+cd ..
+⚙️ Environment Setup
+
+Create a .env file in the project root by copying .env.example.
+
+Windows PowerShell
+Copy-Item .env.example .env
+macOS / Linux
+cp .env.example .env
+
+Update the .env file:
+
+DATABASE_URL="file:./dev.db"
+PORT=4000
+ORGANIZER_PASSCODE= dev-passcode
+CORS_ORIGIN=http://localhost:5173
+
+AI_PROVIDER=mock
+AI_API_KEY=
+AI_MODEL=
+AI_TIMEOUT_MS=6000
+
+
+## 🗄️ Database Setup
+
+Run the following commands from the project root:
+
+npx prisma generate
+npx prisma migrate deploy
+
+Optional: Load the demo event:
+
+npm run seed
+
+This creates a sample event that can be used to explore the platform.
+
+▶️ Run the Project
+Backend
+
+From the project root:
+
+npm run dev
+
+Backend runs at:
+
+http://localhost:4000
+
+Health check:
+
+http://localhost:4000/health
+Frontend
+
+Open another terminal:
+
+cd frontend
+npm run dev
+
+Frontend runs at:
+
+http://localhost:5173
+
+Keep both terminals running while using AnchorFlow.
+
+## 🔐 Organizer Access
+
+Open:
+
+http://localhost:5173/organizer/events
+
+Enter the ORGANIZER_PASSCODE configured in your .env file.
+
+From the Organizer Dashboard, you can:
+
+Create and manage events
+Add speakers and agenda items
+Generate AI scripts
+Start and control the live event
+Handle delays and announcements
+Monitor audience feedback
+
+## 🎤 Anchor Access
+
+Open:
+
+http://localhost:5173/anchor/<event-id>
+
+For the demo event:
+
+http://localhost:5173/anchor/demo-event-001
+
+The Anchor Dashboard displays:
+
+Current activity
+Live countdown
+AI-generated scripts
+Upcoming activity
+Schedule changes
+Live announcements
+🧠 Crowd Brain
+
+Audience members can submit quick live feedback through:
+
+http://localhost:5173/crowd-brain/<event-id>
+
+For the demo event:
+
+http://localhost:5173/crowd-brain/demo-event-001
+
+Audience responses are aggregated and analyzed to:
+
+Identify overall audience sentiment
+Generate a quick AI summary
+Inform the anchor about audience mood
+Suggest changes in tone or delivery
+Generate a suitable anchor response
+
+The audience does not need an account to submit feedback.
+
+## 🤖 AI Configuration
+
+AnchorFlow supports:
+
+Mock AI — works without an API key
+OpenAI
+Gemini
+
+By default:
+
+AI_PROVIDER=mock
+
+To use a real AI provider, update the backend .env.
+
+Gemini
+AI_PROVIDER=gemini
+AI_API_KEY=your-api-key
+AI_MODEL=gemini-2.5-flash
+OpenAI
+AI_PROVIDER=openai
+AI_API_KEY=your-api-key
+AI_MODEL=gpt-4.1-mini
+
+Restart the backend after changing AI configuration.
+
+Never commit your .env file, API keys, or organizer passcode to GitHub.
+
+🔗 Main Routes
+Route	Purpose
+/organizer/events	Organizer Dashboard
+/organizer/events/new	Create Event
+/organizer/events/:id/setup	Event Setup
+/organizer/events/:id/speakers	Speaker Management
+/organizer/events/:id/agenda	Agenda Management
+/organizer/events/:id/scripts	AI Script Management
+/organizer/events/:id/live	Live Event Control
+/organizer/events/:id/summary	Event Summary
+/anchor/:eventId	Anchor Dashboard
+/crowd-brain/:eventId	Audience Feedback
+📱 Using AnchorFlow on Multiple Devices
+
+To let the anchor or audience join from another device:
+
+Connect all devices to the same Wi-Fi network.
+Find the host computer's local IP address.
+Replace localhost with that IP address.
+
 
 ## 👩‍💻 Contributors
 
