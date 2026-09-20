@@ -1,16 +1,29 @@
 import { useParams } from 'react-router-dom';
 import { useLiveEvent } from '../../hooks/useLiveEvent';
+import { useCrowdBrain } from '../../hooks/useCrowdBrain';
 import ScriptCard from '../../components/anchor/ScriptCard';
 import NextUpBanner from '../../components/anchor/NextUpBanner';
 import DelayBanner from '../../components/anchor/DelayBanner';
 import PausedOverlay from '../../components/anchor/PausedOverlay';
 import EndedScreen from '../../components/anchor/EndedScreen';
 import Countdown from '../../components/anchor/Countdown';
+import CrowdBrainCard from '../../components/anchor/CrowdBrainCard';
 import '../../styles/anchor.css';
 
 export default function AnchorScreen() {
   const { eventId } = useParams();
   const { snapshot, loading, notStarted, serverOffset } = useLiveEvent(eventId);
+
+  const currentAgendaItemId = snapshot?.current?.item?.id || null;
+
+  const {
+    aggregate: crowdBrainAggregate,
+    loading: crowdBrainLoading,
+    error: crowdBrainError,
+    isRegenerating,
+    regenerateResult,
+    triggerRegenerateLine,
+  } = useCrowdBrain(eventId, currentAgendaItemId);
 
   if (loading) {
     return (
@@ -56,7 +69,7 @@ export default function AnchorScreen() {
   const isDelayed = snapshot?.scheduleStatus === 'delayed';
 
   return (
-    <div className="anchor-screen">
+    <div className="anchor-screen" style={{ overflowY: 'auto' }}>
       {/* Paused Overlay */}
       {isPaused && <PausedOverlay />}
 
@@ -105,6 +118,16 @@ export default function AnchorScreen() {
 
       {/* Main Teleprompter Script Card */}
       <ScriptCard script={snapshot?.current?.script} />
+
+      {/* Crowd Brain Audience Feedback & AI Insights Card */}
+      <CrowdBrainCard
+        aggregate={crowdBrainAggregate}
+        loading={crowdBrainLoading}
+        error={crowdBrainError}
+        isRegenerating={isRegenerating}
+        regenerateResult={regenerateResult}
+        onRegenerateLine={triggerRegenerateLine}
+      />
 
       {/* Footer / Next Up Banner */}
       <NextUpBanner next={snapshot?.next} />

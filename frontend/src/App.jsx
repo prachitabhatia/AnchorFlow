@@ -15,6 +15,7 @@ import SummaryPage from './pages/organizer/SummaryPage';
 
 // Anchor Page
 import AnchorScreen from './pages/anchor/AnchorScreen';
+import CrowdBrainFeedbackPage from './pages/anchor/CrowdBrainFeedbackPage';
 
 // Components
 import OrganizerShell from './components/organizer/OrganizerShell';
@@ -46,6 +47,7 @@ export default function App() {
             No organizer passcode is read or required.
            ==================================================================== */}
         <Route path="/anchor/:eventId" element={<AnchorScreen />} />
+        <Route path="/crowd-brain/:eventId" element={<CrowdBrainFeedbackPage />} />
 
         {/* ====================================================================
             PROTECTED ORGANIZER ROUTES

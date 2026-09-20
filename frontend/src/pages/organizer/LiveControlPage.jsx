@@ -9,6 +9,7 @@ import DelayModal from '../../components/organizer/DelayModal';
 import DelayResultCard from '../../components/organizer/DelayResultCard';
 import SpeakerArrivalControl from '../../components/organizer/SpeakerArrivalControl';
 import AnnouncementComposer from '../../components/organizer/AnnouncementComposer';
+import CrowdBrainQrCode from '../../components/organizer/CrowdBrainQrCode';
 
 export default function LiveControlPage() {
   const { id: eventId } = useParams();
@@ -184,6 +185,9 @@ export default function LiveControlPage() {
         next={snapshot?.next}
         runState={effectiveRunState}
       />
+
+      {/* Crowd Brain QR Code for Public Attendee Feedback */}
+      <CrowdBrainQrCode eventId={eventId} />
 
       {/* Closing Script Card (Renders when event ends and closingScript is returned) */}
       {closingScript && (
