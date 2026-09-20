@@ -4,6 +4,7 @@ import { getEvent } from '../../api/events';
 import LoadingSpinner from '../../components/shared/LoadingSpinner';
 import ErrorBanner from '../../components/shared/ErrorBanner';
 import Button from '../../components/shared/Button';
+import SaveAsTemplateModal from '../../components/organizer/SaveAsTemplateModal';
 
 export default function EventSetupPage() {
   const { id } = useParams();
@@ -11,6 +12,7 @@ export default function EventSetupPage() {
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
+  const [isTemplateModalOpen, setIsTemplateModalOpen] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
@@ -93,7 +95,14 @@ export default function EventSetupPage() {
             Tone: <strong style={{ color: 'var(--organizer-accent)', textTransform: 'capitalize' }}>{event.tone}</strong>
           </p>
         </div>
-        <div style={{ display: 'flex', gap: '0.5rem' }}>
+        <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={() => setIsTemplateModalOpen(true)}
+          >
+            📐 Save as Template
+          </Button>
           <Link to={`/organizer/events/${id}/live`}>
             <Button variant="primary">🔴 Enter Live Control</Button>
           </Link>
@@ -135,6 +144,13 @@ export default function EventSetupPage() {
       }}>
         💡 <strong>Setup Workspace:</strong> Use the sub-navigation tabs above (<strong>Speakers</strong>, <strong>Agenda</strong>, <strong>Scripts</strong>) to configure stage assets for this event.
       </div>
+
+      <SaveAsTemplateModal
+        isOpen={isTemplateModalOpen}
+        onClose={() => setIsTemplateModalOpen(false)}
+        eventId={id}
+        eventName={event?.name}
+      />
     </div>
   );
 }

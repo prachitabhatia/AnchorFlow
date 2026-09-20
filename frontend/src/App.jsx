@@ -5,6 +5,7 @@ import PasscodeGatePage from './pages/organizer/PasscodeGatePage';
 
 // Organizer Pages
 import EventListPage from './pages/organizer/EventListPage';
+import TemplateListPage from './pages/organizer/TemplateListPage';
 import EventCreatePage from './pages/organizer/EventCreatePage';
 import EventSetupPage from './pages/organizer/EventSetupPage';
 import SpeakersPage from './pages/organizer/SpeakersPage';
@@ -62,6 +63,7 @@ export default function App() {
           }
         >
           <Route path="events" element={<EventListPage />} />
+          <Route path="events/templates" element={<TemplateListPage />} />
           <Route path="events/new" element={<EventCreatePage />} />
           <Route path="events/:id" element={<OrganizerShell />}>
             <Route index element={<EventSetupPage />} />

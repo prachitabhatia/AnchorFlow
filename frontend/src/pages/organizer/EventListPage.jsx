@@ -64,9 +64,14 @@ export default function EventListPage() {
               Manage your live stage events, agendas, and anchor teleprompters.
             </p>
           </div>
-          <Link to="/organizer/events/new">
-            <Button variant="primary">+ Create New Event</Button>
-          </Link>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            <Link to="/organizer/events/templates">
+              <Button variant="secondary">📐 Saved Templates</Button>
+            </Link>
+            <Link to="/organizer/events/new">
+              <Button variant="primary">+ Create New Event</Button>
+            </Link>
+          </div>
         </div>
 
         {errorMsg && <ErrorBanner message={errorMsg} style={{ marginBottom: '1.5rem' }} />}
