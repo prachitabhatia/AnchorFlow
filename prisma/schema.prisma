@@ -17,6 +17,8 @@ model Event {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  sourceTemplateId String?
+
   speakers      Speaker[]
   agendaItems   AgendaItem[]
   scripts       Script[]
@@ -145,4 +147,30 @@ model CrowdBrainInsight {
 
   event      Event      @relation(fields: [eventId], references: [id], onDelete: Cascade)
   agendaItem AgendaItem @relation(fields: [agendaItemId], references: [id], onDelete: Cascade)
+}
+
+model EventTemplate {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  type        String
+  tone        String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  agendaItems TemplateAgendaItem[]
+}
+
+model TemplateAgendaItem {
+  id              String  @id @default(cuid())
+  templateId      String
+  title           String
+  type            String
+  durationMinutes Int
+  orderIndex      Int
+  isBuffer        Boolean @default(false)
+
+  template EventTemplate @relation(fields: [templateId], references: [id], onDelete: Cascade)
+
+  @@index([templateId, orderIndex])
 }
